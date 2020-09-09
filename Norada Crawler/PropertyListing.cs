@@ -23,7 +23,7 @@ namespace Norada_Crawler
 		public string PropertyManagement { get; set; }
 		public string CashFlow { get; set; }
 		public string CapRate { get; set; }
-		public string RentValueRatio { get; set; }
+		public double RentValueRatio { get; set; }
 		public string DealGrader { get; set; }
 	}
 }
