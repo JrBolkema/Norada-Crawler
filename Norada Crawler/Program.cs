@@ -18,47 +18,41 @@ namespace Norada_Crawler
 
 		private static async Task StartCrawlerAsync()
 		{
-			var url = "http://www.noradarealestate.com/Real-Estate-Investments/Illinois/Chicago/";
+			var url = "https://www.noradarealestate.com/real-estate-investments?paged=1";
 			var httpClient = new HttpClient();
 			var html = await httpClient.GetStringAsync(url);
 			var htmlDocument = new HtmlDocument();
 			htmlDocument.LoadHtml(html);
 			//Console.WriteLine(htmlDocument.Text);
-			var contentDiv = htmlDocument.DocumentNode.Descendants("div")
-				.Where(node => node.GetAttributeValue("id", "").Equals("view1")).ToList();
-
+			//var contentDiv = htmlDocument.DocumentNode.Descendants("div")
+			//	.Where(node => node.GetAttributeValue("class", "").Equals("card-body carousel_featured")).ToList();
+			
+		
+			
+			for (int i = 1; i < 11; i++)
+			{
+				var name = htmlDocument.DocumentNode
+				.SelectSingleNode($"//*[@id='owl-carousel-new']/div[{i}]/div/div[2]/div[2]/div[1]/div/h3")
+				.InnerText;
+				Console.WriteLine(name);
+			}
+			
 
 			
-			foreach (var div in contentDiv)
-			{
-				var tables = div.Descendants("table").ToList();
-				foreach (var table in tables)
-				{
-					var tableData = table.Descendants("td").ToList();
+			//*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[2]/div[1]/div/h3
 
-					//foreach (var data in tableData)
-					//{
-					//	Console.WriteLine(data.InnerText.Trim().Length);
-					//	if (data.InnerText.Trim().Length > 75)
-					//	{
-					//		tableData.IndexOf(data);
-					//		tableData.RemoveAt(tableData.IndexOf(data));
-					//	}
-					//	//Console.WriteLine("DATA: " + data.InnerText.Trim());
-					//}
+			//*[@id="owl-carousel-new"]/div[2]/div/div[2]/div[2]/div[1]/div/h3
+			//*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[2]/div[1]/div/h3
+			//*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[2]/div[1]/div/h3
+			//*[@id="owl-carousel-new"]/div[7]/div/div[2]/div[2]/div[1]/div/h3
 
-					foreach (var data in tableData)
-					{
-						Console.WriteLine("DATA: " + data.InnerText.Trim());
-					}
-					//var tableData1 = table.Descendants("td")
-					//	.Where(node => node.GetAttributeValue("class", "").Equals("Prop-TD-1")).ToList();
-					//var tableData2 = table.Descendants("td")
-					//	.Where(node => node.GetAttributeValue("class", "").Equals("Prop-TD-2")).ToList();
+			//foreach (var div in contentDiv)
+			//{
+			//	Console.WriteLine(div);
 
-					
-				}
-			}
+
+			//	}
 		}
 	}
-}
+	}
+
