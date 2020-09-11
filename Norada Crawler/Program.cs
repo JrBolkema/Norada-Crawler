@@ -30,7 +30,8 @@ namespace Norada_Crawler
 
 		private static async Task StartCrawlerAsync()
 		{
-			for (int j = 1; j < 14; j++)
+			List<PropertyListing> desirableProperties = new List<PropertyListing>();
+			for (int j = 1; j < 13; j++)
 			{
 
 
@@ -39,44 +40,54 @@ namespace Norada_Crawler
 				var html = await httpClient.GetStringAsync(url);
 				var htmlDocument = new HtmlDocument();
 				htmlDocument.LoadHtml(html);
+				
 
 				for (int i = 1; i < 10; i++)
 				{
 					NoradaUrls noradaUrls = new NoradaUrls(i);
-					PropertyListing listing = new PropertyListing();
-
-					listing.Location = SelectInnerText(htmlDocument, noradaUrls.Location);
-					listing.PurchasePrice = SelectInnerText(htmlDocument, noradaUrls.PurchasePrice);
-					listing.RentalIncome = SelectInnerText(htmlDocument, noradaUrls.RentalIncome);
-					listing.YearBuilt = SelectInnerText(htmlDocument, noradaUrls.YearBuilt);
-					listing.PricePerSqFoot = SelectInnerText(htmlDocument, noradaUrls.PricePerSqFoot);
-					listing.RentValueRatio = Convert.ToDouble(SelectInnerText(htmlDocument, noradaUrls.RentValueRatio).TrimEnd('%'));
-					listing.Neighborhood = SelectInnerText(htmlDocument, noradaUrls.Neighborhood);
-					listing.CapRate = SelectInnerText(htmlDocument, noradaUrls.CapRate);
-					listing.CashFlow = SelectInnerText(htmlDocument, noradaUrls.CashFlow);
-					listing.BedRooms = SelectInnerText(htmlDocument, noradaUrls.BedRooms);
-					listing.Bathrooms = SelectInnerText(htmlDocument, noradaUrls.Bathrooms);
-					listing.Size = SelectInnerText(htmlDocument, noradaUrls.Size);
-					listing.Parking = SelectInnerText(htmlDocument, noradaUrls.Parking);
-					if (listing.RentValueRatio >=1 )
+					PropertyListing listing = MapToProperyListing(htmlDocument, noradaUrls);
+					listing.ListingPageURL = url;
+					if (listing.RentValueRatio >= 1)
 					{
-						Console.WriteLine("Page " + j);
-						Console.WriteLine("Purchase Price: " + listing.PurchasePrice);
-						Console.WriteLine("RVR " + listing.RentValueRatio);
+						Console.WriteLine("Added a property!");
+						desirableProperties.Add(listing);
 					}
-					
 				}
-				
-
+				Console.WriteLine($"Page {j} Complete!");
+			}
+			foreach (var listing in desirableProperties)
+			{
+				listing.WriteListing();
 			}
 
+		}
+
+		private static PropertyListing MapToProperyListing(HtmlDocument htmlDocument, NoradaUrls noradaUrls)
+		{
+			PropertyListing listing = new PropertyListing();
+
+			listing.Location = SelectInnerText(htmlDocument, noradaUrls.Location);
+			listing.PurchasePrice = SelectInnerText(htmlDocument, noradaUrls.PurchasePrice);
+			listing.RentalIncome = SelectInnerText(htmlDocument, noradaUrls.RentalIncome);
+			listing.YearBuilt = SelectInnerText(htmlDocument, noradaUrls.YearBuilt);
+			listing.PricePerSqFoot = SelectInnerText(htmlDocument, noradaUrls.PricePerSqFoot);
+			listing.RentValueRatio = Convert.ToDouble(SelectInnerText(htmlDocument, noradaUrls.RentValueRatio).TrimEnd('%'));
+			listing.Neighborhood = SelectInnerText(htmlDocument, noradaUrls.Neighborhood);
+			listing.CapRate = SelectInnerText(htmlDocument, noradaUrls.CapRate);
+			listing.CashFlow = SelectInnerText(htmlDocument, noradaUrls.CashFlow);
+			listing.BedRooms = SelectInnerText(htmlDocument, noradaUrls.BedRooms).Trim();
+			listing.Bathrooms = SelectInnerText(htmlDocument, noradaUrls.Bathrooms).Trim();
+			listing.Size = SelectInnerText(htmlDocument, noradaUrls.Size).Trim();
+			listing.Parking = SelectInnerText(htmlDocument, noradaUrls.Parking).Trim();
+			
+			return listing;
 		}
 
 		public static string SelectInnerText(HtmlDocument htmlDocument, string path)
 		{
 			return htmlDocument.DocumentNode
 				.SelectSingleNode(path)
-				.InnerText;
+				.InnerText ?? "99";
 		}
 	}
 	}

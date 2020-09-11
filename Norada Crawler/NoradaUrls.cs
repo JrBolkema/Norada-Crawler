@@ -32,13 +32,9 @@ namespace Norada_Crawler
 			PurchasePrice = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[2]/div[1]/div/h3";
 			RentalIncome = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[2]/div[2]/div/h3";
 			YearBuilt = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[3]/div[1]/div/h3";
-										//*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[3]/div[1]/div/h3
 			PricePerSqFoot = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[3]/div[2]/div/h3";
-									         //*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[3]/div[2]/div/h3
 			RentValueRatio = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[4]/div[1]/div/h3";
-										     //*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[4]/div[1]/div/h3
-			Neighborhood = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[4]/div[2]/div/h3/span";
-										   //*[@id="owl-carousel-new"]/div[1]/div/div[2]/div[4]/div[2]/div/h3/span
+			Neighborhood = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[4]/div[2]/div/h3";
 			CapRate =  $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[5]/div[1]/div/h3";
 			CashFlow = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[5]/div[2]/div/h3";
 			BedRooms = $"//*[@id='owl-carousel-new']/div[{listingNumber}]/div/div[2]/div[1]/div[1]/div[1]";
