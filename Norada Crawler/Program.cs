@@ -27,14 +27,19 @@ namespace Norada_Crawler
 	
 
 		}
-
+		
 		private static async Task StartCrawlerAsync()
 		{
 			List<PropertyListing> desirableProperties = new List<PropertyListing>();
 			for (int j = 1; j < 13; j++)
 			{
 
-
+				// todo: swtich to while loops, go until null
+				// set it up to email
+				// maybe save the desirable listings and dont resend them?
+				// or maybe save all the listings and add new ones
+				// figure out if i can run this on .net core and my pi
+				// set up the file to run periodically, pi or pc
 				var url = $"https://www.noradarealestate.com/real-estate-investments?paged={j}";
 				var httpClient = new HttpClient();
 				var html = await httpClient.GetStringAsync(url);
