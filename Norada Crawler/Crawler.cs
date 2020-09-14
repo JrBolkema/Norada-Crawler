@@ -35,7 +35,7 @@ namespace Norada_Crawler
 					PropertyListing listing = MapToProperyListing(htmlDocument, noradaUrls);
 					listing.ListingPageURL = url;
 					allProperties.Add(listing);
-					if (loopShouldContinue == false || i == 10)
+					if (loopShouldContinue == false || i == 9)
 					{
 						break;
 					}
