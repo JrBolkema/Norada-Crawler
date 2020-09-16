@@ -7,6 +7,7 @@ using HtmlAgilityPack;
 using System.Net.Http;
 using Microsoft.Data.Sqlite;
 
+
 namespace Norada_Crawler
 {
 	class Program
@@ -17,11 +18,32 @@ namespace Norada_Crawler
 
 		static void Main(string[] args)
 		{
-			//using (var connection = new SqliteConnection("Norada.db"))
-			//{
-			//	connection.Open();
-			//	connection.Close();
-			//}
+			using (var connection = new SqliteConnection("Data Source=Norada.db"))
+			{
+				connection.Open();
+				//string dropTable = "drop table if exists listings";
+				//SqliteCommand command2 = new SqliteCommand(dropTable, connection);
+				//command2.ExecuteNonQuery();
+				//string sql = "create table if not exists listings ( " +
+				//	"location text," +
+				//	"purchasePrice text," +
+				//	"rentValueRatio real," +
+				//	"yearBuilt text)";
+				//SqliteCommand command = new SqliteCommand(sql, connection);
+				//command.ExecuteNonQuery();
+				//sql = "insert into listings (location, purchasePrice,rentValueRatio,yearBuilt) values ('test', '1000', 1.2, '2010')";
+				//command = new SqliteCommand(sql, connection);
+				//command.ExecuteNonQuery();
+				string queryTable = "select all location, purchasePrice, rentValueRatio, yearBuilt from listings";
+				SqliteCommand queryCommand = new SqliteCommand(queryTable, connection);
+				SqliteDataReader reader = queryCommand.ExecuteReader();
+				while (reader.Read())
+				{
+					Console.WriteLine($"{reader.GetString(0)} {reader.GetString(1)} {reader.GetDouble(2)} {reader.GetString(3)}");
+				}
+				connection.Close();
+
+			}
 
 			var crawler = new Crawler();
 			crawler.StartCrawlerAsync();

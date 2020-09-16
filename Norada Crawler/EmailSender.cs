@@ -13,18 +13,18 @@ namespace Norada_Crawler
 		public string SenderEmail { get; set; } = "jonsautoemail@gmail.com";
 		public string Password { get; set; } = "rH%O@#7NH48qX7D";
 		public string Recipient { get; set; } = "jrbolkema@gmail.com";
-		public List<PropertyListing> desiredListings {get; set ;}
-		public SmtpClient smtpClient { get; set; }
+		public List<PropertyListing> DesiredListings {get; set ;}
+		public SmtpClient SMTPClient { get; set; }
 
 		public EmailSender(List<PropertyListing> desiredListing)
 		{
-		smtpClient = new SmtpClient("smtp.gmail.com")
+		SMTPClient = new SmtpClient("smtp.gmail.com")
 		{
 			Port = 587,
 			Credentials = new NetworkCredential(SenderEmail,Password),
 			EnableSsl = true,
 		};
-			desiredListings = desiredListing;
+			DesiredListings = desiredListing;
 
 		}
 
@@ -45,11 +45,10 @@ namespace Norada_Crawler
 
 		public string BodyCreator()
 		{
-
-			string body = "";
-			foreach (var listing in desiredListings)
+			var body = new StringBuilder("");
+			
+			foreach (var listing in DesiredListings)
 			{
-
 				var formattedListing = 
 					$@"<table style='width: 350px; color:black'>
 						<th style='width: 350px;' colspan='2'>
@@ -105,15 +104,15 @@ namespace Norada_Crawler
 					</table>
 					<br>
 					<br>";
-				body += formattedListing;
+				body.Append(formattedListing);
 			}
-			return body;
+			return body.ToString();
 
 		}
 		public void SendEmail()
 		{
 			var message = MessageCreator();
-			smtpClient.Send(message);
+			//smtpClient.Send(message);
 			Console.WriteLine("Email Sent!");
 		}
 

@@ -66,9 +66,9 @@ namespace Norada_Crawler
 			{
 				listing.Location = SelectInnerText(htmlDocument, noradaUrls.Location) ?? null;
 			}
-			catch (NullReferenceException ex)
+			catch (NullReferenceException)
 			{
-				setContinueToFalse();
+				SetContinueToFalse();
 				return new PropertyListing {Location = "Last Listing"};
 			}
 
@@ -88,7 +88,7 @@ namespace Norada_Crawler
 			return listing;
 		}
 
-		private void setContinueToFalse()
+		private void SetContinueToFalse()
 		{
 			loopShouldContinue = false;
 		}
